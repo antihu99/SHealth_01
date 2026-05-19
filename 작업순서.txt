@@ -1,0 +1,203 @@
+0. 단계 
+.cursorrules 만들기
+
+
+□ 구체적으로 하려는 일(흐름)
+"	브랜치 준비: 기존 repo를 폴더 복사로 준비 → main에서 prompting 브랜치 생성/푸시(기존 PR은 merge 없이 유지).
+"	요구사항 분석(1단계): 아이템 규칙(일반/Aged Brie/Backstage/Sulfuras/Conjured)과 경계값을 표로 정리해 requirements_analysis.md 생성.
+"	코드 품질 분석(2단계): updateQuality()의 SOLID 위반/Code Smell을 분석해 code_quality_report.md 생성.
+"	테스트 계획·케이스(3~4단계): 경계값(quality 0·50, sellIn 0·-1) 중심으로 JUnit5/GoogleTest 테스트를 설계·작성.
+"	테스트 실행·결함(5단계): 실패 로그로 원인/심각도 분류, 최소 변경으로 수정(단, Item 수정 금지).
+"	Golden Master(6단계): TexttestFixture 출력 기반 회귀 테스트 자동화(파일 비교) + CI 연동 아이디어.
+"	리팩토링 지원(7단계): 리팩토링 전후 기능 동일성(출력 동일/테스트 Green) 유지하면서 구조 개선.
+"	결함 관리·최종 QA 보고(8~9단계): 결함/메트릭을 문서화(defect_report.md, qa_final_report.md)하고 PR 설명/리뷰 자료로 활용.
+
+□ 산출물(문서/파일)로 요구하는 것
+"	requirements_analysis.md, code_quality_report.md, test_plan.md, defect_report.md, qa_final_report.md (등)
+"	테스트 파일(GildedRoseTest.java 또는 GildedRoseTest.cpp)과 Golden Master 테스트
+"	.cursorrules에 기술스택/경계값/Item 수정 금지 같은 "절대 규칙"을 넣어 프롬프트 품질을 고정
+
+
+======================================================
+
+
+단계	제목	주요 산출물
+0단계	실습 준비 (브랜치·환경·.cursorrules)	브랜치 생성 / .cursorrules
+1단계	요구사항 분석 (Requirements Analysis)	requirements_analysis.md
+2단계	코드 품질 분석 (SOLID & Code Smell)	code_quality_report.md
+-------------------------------------------------------------------------
+3단계	테스트 계획 (Test Plan)	test_plan.md
+4단계	테스트 케이스 작성 (Test Cases)	테스트 코드 파일
+5단계	테스트 실행 & 결함 분석 (Defect Detection)	defect_list.md
+6단계	Golden Master 자동화 (회귀 안전장치)	Golden Master 테스트
+7단계	리팩토링 지원 (Green 유지)	단계별 체크리스트
+8단계	결함 관리 & 보고 (Defect Management)	defect_report.md
+9단계	QA 종합 검토 (최종 보고서)	qa_final_report.md
+-------------------------------------------------
+
+0단계 ? 실습 준비 (브랜치·환경·.cursorrules)
+=============================
+git checkout main
+git checkout -b prompting
+
+# 작업 내용이 있어야 푸시 시 PR이 생깁니다.
+git add .
+git commit -m "chore: Cursor AI QA 프롬프팅 브랜치 초기화"
+git push --set-upstream origin prompting
+
+----0-B  .cursorrules 초안 생성-------------------------------------------------------------
+[P] 당신은 레거시 코드 QA/리팩토링을 돕는 시니어 Java 엔지니어입니다.
+[C] Gilded Rose Java 프로젝트에서 Cursor AI가 항상 따라야 하는 규칙을
+    프로젝트 루트의 .cursorrules로 작성하려고 합니다.
+[T] 아래 요구를 만족하는 .cursorrules 내용을 작성해줘.
+    - 기술 스택: Java 21 + Maven + JUnit 5 (+ JaCoCo)
+    - 절대 규칙: Item 클래스 수정 금지, quality 0~50 (Sulfuras 제외), sellIn 음수 허용
+    - 테스트 규칙: Given-When-Then, @ParameterizedTest, 경계값(quality 0/50, sellIn 0/-1) 포함
+    - 리팩토링 규칙: 테스트 Green 상태에서만 진행, 매직 넘버 상수화 권장
+[F] .cursorrules 파일에 그대로 붙여넣을 수 있는 텍스트
+
+=========================================
+
+
+
+1단계 ? 요구사항 분석 (Requirements Analysis)
+=========================================
+@GildedRoseRequirements.txt @README.md
+
+[P] 시니어 Java QA 엔지니어 관점에서
+[C] Gilded Rose Java 프로젝트 (Java 21, Maven, JUnit 5)
+[T] 요구사항을 분석해서 아래를 정리해줘.
+    1) 아이템 타입별 비즈니스 규칙 표
+       - Normal / Aged Brie / Backstage Pass / Sulfuras / Conjured
+    2) 예외/경계값 조건 (quality 0~50, sellIn 0/-1/음수, Sulfuras 예외)
+    3) Conjured 신규 요구사항 (감소율 2배) 명세
+    4) 테스트해야 할 주요 시나리오 목록 (번호)
+[F] Markdown (표 + 번호 목록). requirements_analysis.md로 저장
+
+
+2단계 ? 코드 품질 분석 (SOLID & Code Smell)
+=========================================
+@GildedRose.java
+
+[P] 시니어 Java 아키텍트 + 클린코드 전문가입니다.
+[T] updateQuality()를 SOLID/Code Smell 관점에서 분석해줘.
+    - SRP/OCP 위반 지점과 근거
+    - Code Smell: Long Method, Magic Number, Duplicated Code, 복잡도
+    - 리팩토링 우선순위 (1~5)와 이유
+[F] Markdown 표 (문제점 | 위반 원칙/스멜 | 영향 | 개선 방향 | 우선순위)
+    결과를 code_quality_report.md로 저장
+
+
+3단계 ? 테스트 계획 (Test Plan)
+@GildedRose.java @GildedRoseRequirements.txt @requirements_analysis.md
+
+[P] 시니어 QA 리드입니다.
+[C] Java 21, JUnit 5, Maven, (가능하면 JaCoCo)
+[T] 테스트 계획서를 작성해줘.
+    - 단위 테스트 범위/우선순위
+    - 경계값 테스트 (quality 0,1,49,50 / sellIn 0,-1)
+    - 예외/특이 케이스 목록
+    - 커버리지 목표 (예: 90%+)와 JaCoCo 달성 전략
+[F] Markdown 문서. test_plan.md로 저장
+
+4단계 ? 테스트 케이스 작성 (Test Cases)
+@GildedRoseTest.java @GildedRose.java @requirements_analysis.md
+
+[P] 테스트 설계에 강한 시니어 Java QA입니다.
+[C] Java 21, JUnit 5
+[T] 아이템 타입별 최소 5개 테스트를 작성해줘.
+    - Normal / Aged Brie / Backstage Pass / Sulfuras / Conjured
+    - @DisplayName + Given-When-Then
+    - 경계값 (quality 0/50, sellIn 0/-1) 반드시 포함
+    - 가능한 경우 @ParameterizedTest + @CsvSource 사용
+[F] 완성된 테스트 코드 (파일 단위 수정 포함). mvn test가 Green이 되게 작성
+
+
+5단계 ? 테스트 실행 & 결함 분석 (Defect Detection)
+@GildedRoseTest.java @GildedRose.java
+
+[P] 디버깅과 결함 분석에 능한 Java QA 엔지니어입니다.
+[T] (여기에 mvn test 실패 로그를 붙여넣을 것)
+    1) 실패 원인 (기대/실제 값 차이) 요약
+    2) updateQuality()에서 버그 위치 특정 (파일명:줄번호)
+    3) 결함 심각도 (Critical/Major/Minor/Info) 분류 및 근거
+    4) 최소 코드 변경으로 수정 방안 제안
+       - 단, Item 클래스는 수정 금지
+[F] 수정 diff 제안 + 수정 후 mvn test Green 확인 절차
+
+5-B  결함 목록 문서화 (defect_list.md)
+[P] QA 리드입니다.
+[C] 현재까지 발견된 테스트 실패/결함들을 문서화합니다.
+[T] 발견된 결함을 다음 형식으로 defect_list.md에 정리해줘.
+    항목: [ID] [Severity] [ItemType] [Steps] [Expected] [Actual] [Root Cause] [Fix Summary]
+[F] Markdown. defect_list.md로 저장
+
+
+
+6단계 ? Golden Master 자동화 (회귀 안전장치)
+
+@TexttestFixture.java @GildedRose.java
+
+[P] 회귀 테스트(Approval/Golden Master) 설계 전문가입니다.
+[C] Java 21, JUnit 5, Maven
+[T] TexttestFixture 출력 기반 Golden Master를 설계/구현해줘.
+    1) 기준 출력(golden_master_expected.txt)을 생성/보관하는 방법
+    2) 테스트에서 actual 출력과 파일 비교하는 방법
+    3) CI에서 mvn test로 자동 실행되는 구성
+    4) (선택) Approvals 테스트 적용 가능성
+[F] 테스트 코드 + 파일 저장/비교 구현 + 실행 방법
+
+
+7단계 ? 리팩토링 지원 (테스트 Green 유지)
+@GildedRose.java @code_quality_report.md @requirements_analysis.md
+
+[P] Martin Fowler 스타일 리팩토링 코치입니다.
+[C] 제약: Item 클래스 수정 금지, quality 0~50, 테스트 Green에서만 진행
+[T] updateQuality()를 점진적으로 리팩토링하는 계획을 제안해줘.
+    - 작은 단계 (커밋 단위)로 쪼개기
+    - 전략 패턴/ItemUpdater 인터페이스 등 적용 가능성
+    - 매직 넘버 상수화, 중복 제거, 가독성 개선
+[F] 단계별 체크리스트 + 각 단계 검증 방법 (mvn test)
+
+
+8단계 ? 결함 관리 & 보고 (Defect Management)
+@defect_list.md @requirements_analysis.md @test_plan.md
+
+[P] QA 리드 엔지니어입니다.
+[T] 결함 관리 문서를 defect_report.md로 작성해줘.
+    1) 결함 분류 체계:
+       Severity (Critical/Major/Minor/Info) x ItemType (5종) 매트릭스 표
+    2) 결함 보고서 템플릿 (재현/기대/실제/원인/수정/검증)
+    3) 품질 메트릭 수집 계획
+       - 테스트 통과율, 커버리지, 단계별 결함 발견율
+       - C++: gcov/lcov / Java: JaCoCo / Python: pytest-cov
+    4) (선택) GitHub Issues 연동 워크플로우
+[F] Markdown. defect_report.md로 저장
+
+
+9단계 ? QA 종합 검토 (최종 보고서)
+@requirements_analysis.md @code_quality_report.md @test_plan.md @defect_report.md
+@GildedRose.java @GildedRoseTest.java
+
+[P] QA 리드 엔지니어 관점에서
+[T] Gilded Rose Java 프로젝트의 QA 활동을 종합 검토해줘.
+    1) 테스트 완료율/커버리지 (목표 대비 JaCoCo 수치)
+    2) 결함 패턴 분석 (아이템 타입별/심각도별)
+    3) 9단계 중 효과적이었던 단계 & 개선 필요 단계
+    4) 다음 레거시 프로젝트를 위한 Best Practice 5가지
+    5) Cursor AI 활용 효과 (시간 단축/결함 조기 발견/커버리지 향상) 정량·정성 요약
+[F] Markdown 최종 보고서. qa_final_report.md로 저장
+
+
+
+
+
+
+
+
+
+
+
+
+
+
