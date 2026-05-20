@@ -1,6 +1,6 @@
 # SHealth_01 — 사용자 입력 프롬프트 모음
 
-_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · 3-2 결함·권장 통합 · TC 브랜치 · 4단계 기능개선 · 4-2 2차 리팩토링 · feature 브랜치_  
+_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · 3-2 결함·권장 통합 · TC 브랜치 · 4단계 기능개선 · 4-2 2차 리팩토링 · 5단계 결함관리·QA · 6단계 회고·발표_  
 _수집일: 2026-05-19 (갱신: 2026-05-20)_
 
 ---
@@ -436,6 +436,127 @@ _(04-2단계 세션 — `prompting/04-2.S_Health_2차리팩토링_prompt.md` 생
 
 ---
 
+## Prompt 38
+
+```
+GitHub 의 feature 브랜치에 모두 파일을 업로드 해줘. "4-2단계_추가 기능에 대한 Refactoring" 이라고 comment 해줘
+```
+
+---
+
+## Prompt 39
+
+```
+결함 분류 체계·보고서 템플릿·품질 메트릭 수집 계획 수립할 수 있는 단계를 5단계 이전에 추가해줘,
+결함 관리 및 보고를 위한 PCTF 방식으로 PROMPT 를 만들어서 작업프롬프트폴더 에 저장해줘.
+기존 단계들에 대한 번호도 다시 매겨줘
+```
+
+---
+
+## Prompt 40
+
+**첨부:** `@5단계_PCTF.md` (223-255) — 5단계 PCTF 복사용 블록
+
+```
+[P] 결함 분류·보고 표준·품질 메트릭 설계 시니어 QA. 1~4-2 산출물·3-2 DEF/REC만 근거. 코드·TC 수정 금지.
+[T] 5-1 분류체계 → docs/05.S_Health_결함분류체계.md
+    5-2 템플릿 4+ → docs/05.S_Health_보고서템플릿.md
+    5-3 메트릭 QM 8+ → docs/05.S_Health_품질메트릭수집계획.md
+    5-5 → Report/05.S_Health_결함관리체계_보고서.md
+[F] docs 3종 + Report/05 필수. 한국어.
+```
+
+_(전문은 `작업프롬프트/5단계_PCTF.md` 복사용 및 `prompting/05.S_Health_결함관리및QA_prompt.md` Turn 3 참조)_
+
+---
+
+## Prompt 41
+
+```
+github qa브랜치에 모든 파일을 업로드 해줘 comment 는 "5단계 결함 분석 및 QA" 이라고 해줘
+```
+
+---
+
+## Prompt 42
+
+```
+GIT 에서 5단계 에 대한 PR 을 생성해줘 "#5단계 결함 및 QA"
+```
+
+---
+
+## Prompt 43
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+_(05단계 세션 — `prompting/05.S_Health_결함관리및QA_prompt.md` 생성)_
+
+---
+
+## Prompt 44
+
+```
+@작업프롬프트/6단계_PCTF.md  참고 문서를 docs 폴더 전체로 바꿔주고. [p] 단계를 전체 과정을 회고 발표하는 발표자로 해서 pctf 프롬프트를 보다 구체적으로 만들어줘 산출물에도 5분 내외로 발표할 수 있는 간단한 pdf 파일을 docs 폴더에 만들어줘
+```
+
+---
+
+## Prompt 45
+
+```
+왜 갑자기 python 스크립트를 생성할까요?
+```
+
+---
+
+## Prompt 46
+
+```
+넵... 그리고 산출물에 작업프롬프트 폴더를 참조하여, 작업한 순차적인 prompt 들에 대해서도 review 해주는 문서를 docs 폴더에 만들어 주고, ai 가 작성한 코드에 대한 review 를 하는 문서도 docs 폴더에 만들도록 prompt 를 수정해줘
+```
+
+---
+
+## Prompt 47
+
+**첨부:** `@6단계_PCTF.md` (152-174) — 6단계 PCTF 복사용 블록
+
+```
+[P] 발표자. 5분 스토리 + 작업프롬프트 순차 리뷰 + AI 코드 리뷰. 코드 수정 금지.
+[C] docs/ + 작업프롬프트/ + prompting/S_Health_prompt_user + Report + src.
+[T] 1) docs/06.S_Health_작업프롬프트_순차리뷰.md
+    2) docs/06.S_Health_AI코드_리뷰.md
+    3) Report/06.S_Health_회고및발표.md — §1~9·부록
+    4) docs/06.S_Health_회고발표_5분.pdf
+[F] docs 06 리뷰 2종 + PDF + Report/06 필수. 한국어.
+```
+
+_(전문은 `작업프롬프트/6단계_PCTF.md` 복사용 및 `prompting/06.S_Health_회고발표_prompt.md` Turn 4~5 참조)_
+
+---
+
+## Prompt 48
+
+**첨부:** `@6단계_PCTF.md` (152-174) — 6단계 PCTF 재실행 (동일 복사용 블록)
+
+_(Turn 5 — Report/06·발표 md·PDF 완료, `mvn test` 40/40 Green)_
+
+---
+
+## Prompt 49
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+_(06단계 세션 — `prompting/06.S_Health_회고발표_prompt.md` 생성)_
+
+---
+
 ## 프롬프트 흐름 요약
 
 | # | 의도 | 참조 |
@@ -475,3 +596,15 @@ _(04-2단계 세션 — `prompting/04-2.S_Health_2차리팩토링_prompt.md` 생
 | 35 | 4-2단계 PCTF 프롬프트 작성 (2차 리팩토링·docs 체크리스트) | `작업프롬프트/4-2단계_PCTF.md` |
 | 36 | 4-2 PCTF 실행 (네이밍·상수·추출·DRY·docs/Report 04-2) | `04-2단계_PCTF.md` 복사용 |
 | 37 | 04-2 prompting 문서화 | `04-2.S_Health_2차리팩토링_prompt.md` |
+| 38 | `feature` 브랜치 커밋·푸시 (`e725d04`) 4-2 | GitHub |
+| 39 | 5단계 PCTF 작성·6단계 재번호 | `5·6단계_PCTF.md`, 목차 |
+| 40 | 5단계 PCTF 실행 (docs/05·Report/05) | `5단계_PCTF.md` 복사용 |
+| 41 | `qa` 브랜치 커밋·푸시 (`08873b0`) | GitHub |
+| 42 | PR #4 qa→feature | GitHub |
+| 43 | 05단계 prompting 문서화 | `05.S_Health_결함관리및QA_prompt.md` |
+| 44 | 6단계 PCTF 보강 (발표자·@docs/·PDF) | `6단계_PCTF.md` |
+| 45 | PDF 스크립트 이유 질문 | — |
+| 46 | 6단계 PCTF 수정 (리뷰 2종·스크립트 제거) | `docs/06.*` 리뷰 |
+| 47 | 6단계 PCTF 실행 (docs·Report/06) | `6단계_PCTF.md` 복사용 |
+| 48 | 6단계 PCTF 재실행 (PDF·검증) | Report/06, 발표 PDF |
+| 49 | 06단계 prompting 문서화 | `06.S_Health_회고발표_prompt.md` |
