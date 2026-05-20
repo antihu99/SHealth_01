@@ -6,48 +6,30 @@ import java.util.List;
 final class AgeGroupStatisticsService {
 
     private final double[][] ratioPercentByAgeGroup =
-            new double[HealthConstants.AGE_GROUP_STARTS.length][4];
+            new double[HealthConstants.AGE_GROUP_STARTS.length][BmiCategoryStatisticsHelper.CATEGORY_COUNT];
 
-    AgeGroupStatisticsService(List<UserRecord> users) {
-        aggregate(users);
+    AgeGroupStatisticsService(List<UserRecord> userRecords) {
+        aggregateByAgeGroup(userRecords);
     }
 
     double getRatio(int ageGroupStart, int bmiCategoryType) {
         int ageGroupIndex = AgeGroupHelper.indexOfAgeGroupStart(ageGroupStart);
-        BmiCategory category = BmiCategory.fromLegacyTypeCode(bmiCategoryType);
-        if (ageGroupIndex < 0 || category == null) {
+        BmiCategory bmiCategory = BmiCategory.fromLegacyTypeCode(bmiCategoryType);
+        if (ageGroupIndex < 0 || bmiCategory == null) {
             return 0.0;
         }
-        return ratioPercentByAgeGroup[ageGroupIndex][category.getCategoryIndex()];
+        return ratioPercentByAgeGroup[ageGroupIndex][bmiCategory.getCategoryIndex()];
     }
 
-    private void aggregate(List<UserRecord> users) {
+    private void aggregateByAgeGroup(List<UserRecord> userRecords) {
         for (int ageGroupIndex = 0; ageGroupIndex < HealthConstants.AGE_GROUP_STARTS.length; ageGroupIndex++) {
             int ageGroupStart = HealthConstants.AGE_GROUP_STARTS[ageGroupIndex];
-            int[] categoryCounts = new int[4];
-            int usersInAgeGroup = 0;
-
-            for (UserRecord user : users) {
-                if (!AgeGroupHelper.belongsToAgeGroup(user.getAge(), ageGroupStart)) {
-                    continue;
-                }
-                usersInAgeGroup++;
-                BmiCategory category = user.getCategory();
-                if (category != null) {
-                    categoryCounts[category.getCategoryIndex()]++;
-                }
-            }
-            storeRatioPercentages(ageGroupIndex, categoryCounts, usersInAgeGroup);
-        }
-    }
-
-    private void storeRatioPercentages(int ageGroupIndex, int[] categoryCounts, int usersInAgeGroup) {
-        if (usersInAgeGroup == 0) {
-            return;
-        }
-        for (int i = 0; i < 4; i++) {
-            ratioPercentByAgeGroup[ageGroupIndex][i] =
-                    (double) categoryCounts[i] * HealthConstants.PERCENT_MULTIPLIER / usersInAgeGroup;
+            BmiCategoryStatisticsHelper.AgeGroupCategoryCounts counts =
+                    BmiCategoryStatisticsHelper.countCategoriesInAgeGroup(userRecords, ageGroupStart);
+            BmiCategoryStatisticsHelper.fillRatioPercentages(
+                    ratioPercentByAgeGroup[ageGroupIndex],
+                    counts.getCategoryCounts(),
+                    counts.getUsersInAgeGroup());
         }
     }
 }

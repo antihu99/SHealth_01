@@ -4,16 +4,29 @@ import java.io.IOException;
 
 public class SHealthBMI {
 
+    private static final int[] BMI_CATEGORY_TYPES = {
+            HealthConstants.TYPE_UNDERWEIGHT,
+            HealthConstants.TYPE_NORMAL,
+            HealthConstants.TYPE_OVERWEIGHT,
+            HealthConstants.TYPE_OBESITY
+    };
+
     public static void main(String[] args) throws IOException {
         SHealth shealth = new SHealth();
         shealth.calculateBmi("shealth.dat");
 
-        System.out.printf("20 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(20, 100), shealth.getBmiRatio(20, 200), shealth.getBmiRatio(20, 300), shealth.getBmiRatio(20, 400));
-        System.out.printf("30 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(30, 100), shealth.getBmiRatio(30, 200), shealth.getBmiRatio(30, 300), shealth.getBmiRatio(30, 400));
-        System.out.printf("40 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(40, 100), shealth.getBmiRatio(40, 200), shealth.getBmiRatio(40, 300), shealth.getBmiRatio(40, 400));
-        System.out.printf("50 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(50, 100), shealth.getBmiRatio(50, 200), shealth.getBmiRatio(50, 300), shealth.getBmiRatio(50, 400));
-        System.out.printf("60 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(60, 100), shealth.getBmiRatio(60, 200), shealth.getBmiRatio(60, 300), shealth.getBmiRatio(60, 400));
-        System.out.printf("70 - underweight = %f, normal = %f, overweight = %f, obesity = %f\n", shealth.getBmiRatio(70, 100), shealth.getBmiRatio(70, 200), shealth.getBmiRatio(70, 300), shealth.getBmiRatio(70, 400));
+        for (int ageGroupStart : HealthConstants.AGE_GROUP_STARTS) {
+            printAgeGroupRatios(shealth, ageGroupStart);
+        }
     }
 
+    private static void printAgeGroupRatios(SHealth shealth, int ageGroupStart) {
+        System.out.printf(
+                "%d - underweight = %f, normal = %f, overweight = %f, obesity = %f\n",
+                ageGroupStart,
+                shealth.getBmiRatio(ageGroupStart, BMI_CATEGORY_TYPES[0]),
+                shealth.getBmiRatio(ageGroupStart, BMI_CATEGORY_TYPES[1]),
+                shealth.getBmiRatio(ageGroupStart, BMI_CATEGORY_TYPES[2]),
+                shealth.getBmiRatio(ageGroupStart, BMI_CATEGORY_TYPES[3]));
+    }
 }

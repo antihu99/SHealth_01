@@ -1,6 +1,6 @@
 # SHealth_01 — 사용자 입력 프롬프트 모음
 
-_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · 3-2 결함·권장 통합 · TC 브랜치_  
+_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · 3-2 결함·권장 통합 · TC 브랜치 · 4단계 기능개선 · 4-2 2차 리팩토링 · feature 브랜치_  
 _수집일: 2026-05-19 (갱신: 2026-05-20)_
 
 ---
@@ -325,6 +325,117 @@ _(03-2단계 세션 — `prompting/03-2.S_Health_결함및권장사항_prompt.md
 
 ---
 
+## Prompt 30
+
+```
+github feature 브랜치에 모든 파일을 업로드 해줘 comment 는 "4단계 기능개선" 이라고 해줘
+```
+
+---
+
+## Prompt 31
+
+```
+@작업프롬프트/4단계_PCTF.md  의 [f] 산출물 보고서를 선택이 아닌 필수로 변경해 주고, 한줄 복사용에 참고용 문서명들도 표기해줘
+```
+
+---
+
+## Prompt 32
+
+**첨부:** `@작업프롬프트/4단계_PCTF.md` `@작업시나리오` `@SHealthRequirements.txt` `@.cursorrules` `@SHealth.java` `@src/test/java/com/bestreviewer/` `@docs/03-2.S_Health_결함_레지스터.md` `@docs/03-2.S_Health_권장사항_레지스터.md` `@Report/03-2.S_Health_결함및권장사항_통합보고서.md` `@docs/03.S_Health_단위테스트계획서.md` `@Report/03.S_Health_단위테스트_보고서.md`
+
+**4단계 PCTF 복사용 블록** — SRP·키0·정상목록·전체비율, Report/04 필수
+
+```
+[P] SRP·TDD 시니어 Java. 기존 calculateBmi/getBmiRatio 호환·테스트로 회귀 입증.
+[C] 2~3단계 Green. SHealthRequirements.txt + .cursorrules 4단계 확장.
+[T] 1) SRP 분리 2) 연령대별 비율 3) height==0 키 보정 4) 정상 BMI ID 목록 5) 전체 4분류 비율
+[F] main/test + Report/04.S_Health_기능개선_보고서.md (필수). mvn clean test Green.
+```
+
+_(전문은 `작업프롬프트/4단계_PCTF.md` 복사용 및 `prompting/04.S_Health_기능개선_prompt.md` Turn 3 참조)_
+
+---
+
+## Prompt 33
+
+```
+GitHub 의 feature 브랜치에 모두 파일을 업로드 해줘. "4단계_기능 추가 : Reader,UserRecord,Imputation,BmiCalculator,Classifier,Statistics,SHealth 파사드" 이라고 comment 해줘
+```
+
+---
+
+## Prompt 34
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+_(04단계 세션 — `prompting/04.S_Health_기능개선_prompt.md` 생성)_
+
+---
+
+## Prompt 35
+
+```
+추가된 신규기능에 대한 2차 리펙토링을 진행하려고 함.
+- 네이밍 개선
+- 하드코드 및 전역변수 제거 
+- 함수 추출
+- 반복/중복 제거
+
+를 해결하기 위한, PCTF 방식으로 PROMPT 를 만들어줘
+작업프롬프트 폴더에 있는 pctf 프롬프트들을 참고.
+산출물에 docs 폴더에 리팩토링 체크리스트 문서를 만드는 것도 포함해줘, 그리고 참고문서에 대한 것도 포함해줘
+만들어진 prompt 는 작업프롬프트폴더에 4-2단계 저장해줘
+```
+
+---
+
+## Prompt 36
+
+**첨부:** `@4-2단계_PCTF.md` (244-289) — 4-2 PCTF 복사용 (한 블록) 전체
+
+```
+첨부:
+@작업프롬프트/4-2단계_PCTF.md
+@작업프롬프트/4단계_PCTF.md
+@작업시나리오
+@SHealthRequirements.txt
+@.cursorrules
+@Report/04.S_Health_기능개선_보고서.md
+@docs/02.S_Health_1차리팩토링_체크리스트.md
+@Report/02.S_Health_1차리팩토링_보고서.md
+@docs/03.S_Health_단위테스트계획서.md
+@Report/03.S_Health_단위테스트_보고서.md
+@docs/03-2.S_Health_결함_레지스터.md
+@docs/03-2.S_Health_권장사항_레지스터.md
+@Report/03-2.S_Health_결함및권장사항_통합보고서.md
+@src/main/java/com/bestreviewer/
+@src/test/java/com/bestreviewer/
+
+[P] 4단계 신규·분리 코드 2차 리팩토링 시니어 Java. SHealthRequirements.txt 규칙·3·4단계 TC 동작 유지. 신규 기능·DEF 수정 금지.
+
+[C] 4단계 Green·SRP 클래스 존재. 2단계=1차(SHealth 레거시), 4-2=2차(4단계 범위). 순서: 네이밍→하드코드·전역→함수 추출→DRY.
+[T] 0) 4-2-0 스캔·Green·REC 백로그 1) 네이밍 2) 하드코드·전역 3) 함수 추출 4) DRY
+[F] docs/04-2.S_Health_2차리팩토링_체크리스트.md + main 리팩토링 + Report/04-2.* + mvn clean test Green
+```
+
+_(전문은 `작업프롬프트/4-2단계_PCTF.md` 복사용 및 `prompting/04-2.S_Health_2차리팩토링_prompt.md` Turn 2 참조)_
+
+---
+
+## Prompt 37
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+_(04-2단계 세션 — `prompting/04-2.S_Health_2차리팩토링_prompt.md` 생성)_
+
+---
+
 ## 프롬프트 흐름 요약
 
 | # | 의도 | 참조 |
@@ -356,3 +467,11 @@ _(03-2단계 세션 — `prompting/03-2.S_Health_결함및권장사항_prompt.md
 | 27 | 3-2 PCTF 실행 (DEF/REC·docs·Report) | 1~3단계 보고서·`*Test` |
 | 28 | `TC` 브랜치 커밋·푸시 (`7101869`) | GitHub |
 | 29 | 03-2 prompting 문서화 | `03-2.S_Health_결함및권장사항_prompt.md` |
+| 30 | `feature` 브랜치 생성·푸시 (`2c45cc4`) | GitHub |
+| 31 | 4단계 [F] 보고서 필수·복사용 참조 문서 | `4단계_PCTF.md` |
+| 32 | 4단계 PCTF 실행 (SRP·신규 API·DEF 해소) | `Report/04.*`, `*Test` |
+| 33 | `feature` 브랜치 커밋·푸시 (`ddb6656`) | GitHub |
+| 34 | 04단계 prompting 문서화 | `04.S_Health_기능개선_prompt.md` |
+| 35 | 4-2단계 PCTF 프롬프트 작성 (2차 리팩토링·docs 체크리스트) | `작업프롬프트/4-2단계_PCTF.md` |
+| 36 | 4-2 PCTF 실행 (네이밍·상수·추출·DRY·docs/Report 04-2) | `04-2단계_PCTF.md` 복사용 |
+| 37 | 04-2 prompting 문서화 | `04-2.S_Health_2차리팩토링_prompt.md` |

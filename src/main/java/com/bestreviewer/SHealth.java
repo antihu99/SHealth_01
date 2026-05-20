@@ -14,57 +14,46 @@ public class SHealth {
     static final int TYPE_OVERWEIGHT = HealthConstants.TYPE_OVERWEIGHT;
     static final int TYPE_OBESITY = HealthConstants.TYPE_OBESITY;
 
-    private final CsvUserRecordReader csvReader = new CsvUserRecordReader();
+    private final CsvUserRecordReader csvUserRecordReader = new CsvUserRecordReader();
     private final BmiCalculator bmiCalculator = new BmiCalculator();
     private final BmiClassifier bmiClassifier = new BmiClassifier();
 
-    private final List<UserRecord> users = new ArrayList<>();
-    private AgeGroupStatisticsService ageGroupStatistics;
-    private OverallBmiStatisticsService overallStatistics;
+    private final List<UserRecord> loadedUserRecords = new ArrayList<>();
+    private AgeGroupStatisticsService ageGroupStatisticsService;
+    private OverallBmiStatisticsService overallBmiStatisticsService;
 
     public int calculateBmi(String filename) {
-        users.clear();
-        ageGroupStatistics = null;
-        overallStatistics = null;
-        try {
-            users.addAll(csvReader.read(filename));
-        } catch (IOException e) {
-            e.printStackTrace();
+        resetPipelineState();
+        if (!loadUserRecordsFromFile(filename)) {
             return 0;
         }
-
-        MissingValueImputationService.imputeZeroValuesByAgeGroup(
-                users, MissingValueImputationService.weightExtractor());
-        MissingValueImputationService.imputeZeroValuesByAgeGroup(
-                users, MissingValueImputationService.heightExtractor());
-
+        imputeMissingWeightsAndHeights();
         computeBmisAndClassify();
-        ageGroupStatistics = new AgeGroupStatisticsService(users);
-        overallStatistics = new OverallBmiStatisticsService(users);
-        return users.size();
+        buildStatisticsServices();
+        return loadedUserRecords.size();
     }
 
     public double getBmiRatio(int ageGroupStart, int bmiCategoryType) {
-        if (ageGroupStatistics == null) {
+        if (ageGroupStatisticsService == null) {
             return 0.0;
         }
-        return ageGroupStatistics.getRatio(ageGroupStart, bmiCategoryType);
+        return ageGroupStatisticsService.getRatio(ageGroupStart, bmiCategoryType);
     }
 
     /** 전체 사용자 대비 BMI 범주 비율(%) — getBmiRatio(나이대별)와 구분. */
     public double getOverallBmiRatio(int bmiCategoryType) {
-        if (overallStatistics == null) {
+        if (overallBmiStatisticsService == null) {
             return 0.0;
         }
-        return overallStatistics.getOverallRatio(bmiCategoryType);
+        return overallBmiStatisticsService.getOverallRatio(bmiCategoryType);
     }
 
     /** 18.5 < BMI < 23 정상 범위 사용자 ID 목록 (calculateBmi 실행 후). */
     public List<String> getNormalBmiUserIds() {
-        if (users.isEmpty()) {
+        if (loadedUserRecords.isEmpty()) {
             return Collections.emptyList();
         }
-        return users.stream()
+        return loadedUserRecords.stream()
                 .filter(UserRecord::isNormalBmiRange)
                 .map(UserRecord::getId)
                 .collect(Collectors.toList());
@@ -85,11 +74,39 @@ public class SHealth {
         return AgeGroupHelper.belongsToAgeGroup(age, ageGroupStart);
     }
 
+    private void resetPipelineState() {
+        loadedUserRecords.clear();
+        ageGroupStatisticsService = null;
+        overallBmiStatisticsService = null;
+    }
+
+    private boolean loadUserRecordsFromFile(String filename) {
+        try {
+            loadedUserRecords.addAll(csvUserRecordReader.read(filename));
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void imputeMissingWeightsAndHeights() {
+        MissingValueImputationService.imputeZeroValuesByAgeGroup(
+                loadedUserRecords, UserRecordMutableField.WEIGHT);
+        MissingValueImputationService.imputeZeroValuesByAgeGroup(
+                loadedUserRecords, UserRecordMutableField.HEIGHT);
+    }
+
+    private void buildStatisticsServices() {
+        ageGroupStatisticsService = new AgeGroupStatisticsService(loadedUserRecords);
+        overallBmiStatisticsService = new OverallBmiStatisticsService(loadedUserRecords);
+    }
+
     private void computeBmisAndClassify() {
-        for (UserRecord user : users) {
-            double bmi = bmiCalculator.computeFromKgAndCm(user.getWeight(), user.getHeight());
-            user.setBmi(bmi);
-            user.setCategory(bmiClassifier.classify(bmi));
+        for (UserRecord userRecord : loadedUserRecords) {
+            double bmi = bmiCalculator.computeFromKgAndCm(userRecord.getWeight(), userRecord.getHeight());
+            userRecord.setBmi(bmi);
+            userRecord.setCategory(bmiClassifier.classify(bmi));
         }
     }
 }
