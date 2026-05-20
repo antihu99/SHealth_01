@@ -94,9 +94,14 @@ public class SHealth {
 
     private void computeBmisForAllUsers() {
         for (int i = 0; i < userCount; i++) {
-            double heightMeters = heights[i] / CM_PER_METER;
-            bmis[i] = weights[i] / (heightMeters * heightMeters);
+            bmis[i] = computeBmiFromKgAndCm(weights[i], heights[i]);
         }
+    }
+
+    /** TS-01 단위 테스트용 (동일 패키지). */
+    double computeBmiFromKgAndCm(double weightKg, double heightCm) {
+        double heightMeters = heightCm / CM_PER_METER;
+        return weightKg / (heightMeters * heightMeters);
     }
 
     private void aggregateRatiosByAgeGroup() {
@@ -133,8 +138,9 @@ public class SHealth {
 
     /**
      * 레거시 분류 조건 유지 (BMI=25는 어느 분류에도 포함되지 않음).
+     * TS-03 단위 테스트용 (동일 패키지).
      */
-    private int classifyBmiCategoryIndex(double bmi) {
+    int classifyBmiCategoryIndex(double bmi) {
         if (bmi <= BMI_UNDERWEIGHT_MAX) {
             return CATEGORY_UNDERWEIGHT;
         }
@@ -150,7 +156,8 @@ public class SHealth {
         return -1;
     }
 
-    private boolean belongsToAgeGroup(int age, int ageGroupStart) {
+    /** TS-04 단위 테스트용 (동일 패키지). */
+    boolean belongsToAgeGroup(int age, int ageGroupStart) {
         return age >= ageGroupStart && age < ageGroupStart + AGE_GROUP_WIDTH;
     }
 
