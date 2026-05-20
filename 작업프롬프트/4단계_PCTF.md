@@ -11,7 +11,7 @@ _작업시나리오 4단계 (2시간) · SHealth BMI (Java)_
 | **P** | Persona | **SRP·도메인 설계**에 능숙한 **시니어 Java 엔지니어**. TDD·테스트 우선 확장 |
 | **C** | Context | 2~3단계 리팩토링·단위 테스트 Green 상태에서 기능·구조 개선 |
 | **T** | Task | 책임 분리 + 연령대 BMI 비율 + 키 0 보정 + 정상 BMI 목록 + 전체 범주 비율 |
-| **F** | Format | 패키지 구조·신규 API·테스트 + `mvn clean test` Green + 선택 보고서 |
+| **F** | Format | 패키지 구조·신규 API·테스트 + `mvn clean test` Green + `Report/04.S_Health_기능개선_보고서.md` (필수) |
 
 ---
 
@@ -48,7 +48,10 @@ _작업시나리오 4단계 (2시간) · SHealth BMI (Java)_
   파일 읽기 → 체중 보정 → 키 보정 → BMI 계산 → 분류 → 집계·조회
 ```
 
-**Cursor 첨부 권장:** `@SHealth.java` `@SHealthRequirements.txt` `@.cursorrules` `@작업시나리오` `@src/test/java/com/bestreviewer/`
+**Cursor 첨부 권장:**  
+`@작업프롬프트/4단계_PCTF.md` `@SHealth.java` `@SHealthRequirements.txt` `@.cursorrules` `@작업시나리오`  
+`@docs/03-2.S_Health_결함_레지스터.md` `@docs/03-2.S_Health_권장사항_레지스터.md` `@Report/03-2.S_Health_결함및권장사항_통합보고서.md`  
+`@docs/03.S_Health_단위테스트계획서.md` `@Report/03.S_Health_단위테스트_보고서.md` `@src/test/java/com/bestreviewer/`
 
 ---
 
@@ -106,17 +109,24 @@ _작업시나리오 4단계 (2시간) · SHealth BMI (Java)_
 ## [F] Format
 
 ```
-- 산출물(코드):
-  - src/main/java/com/bestreviewer/ — 분리된 클래스·SHealth 파사드
-  - src/test/java/com/bestreviewer/ — 4-2~4-5 신규 TC
-- 산출물(선택 문서): Report/04.S_Health_기능개선_보고서.md
+- 산출물(코드, 필수):
+  1) src/main/java/com/bestreviewer/ — SRP 분리 클래스·SHealth 파사드
+  2) src/test/java/com/bestreviewer/ — 4-2~4-5 신규 TC, 기존 *Test Green 유지
+  3) mvn clean test — 전체 Green (로그 요약을 보고서 §6에 기재)
+- 산출물(문서, 필수):
+  Report/04.S_Health_기능개선_보고서.md
   ## 1. 패키지·클래스 구조 (mermaid)
   ## 2. 신규·변경 API 표 (메서드·입력·출력·규칙)
   ## 3. 처리 순서 다이어그램 (보정→BMI→집계)
-  ## 4. 기능별 테스트 매핑
-  ## 5. 기존 API 호환성·알려진 제한
-  ## 6. mvn clean test 결과
-- 한국어 작성
+  ## 4. 기능별 테스트 매핑 (4-1~4-5 ↔ TC-ID·*Test 클래스)
+  ## 5. 기존 API 호환성·DEF/REC(03-2) 해소·잔여 제한
+  ## 6. mvn clean test 결과 (성공·실패·스킵 건수)
+- 한국어·표 위주 작성
+- 완료 체크:
+  - [ ] 4-1~4-5 코드·TC 반영
+  - [ ] calculateBmi / getBmiRatio 하위 호환 또는 변경 시 회귀 TC
+  - [ ] Report/04.S_Health_기능개선_보고서.md 존재, §1~§6 기재
+  - [ ] mvn clean test Green
 ```
 
 ---
@@ -124,9 +134,34 @@ _작업시나리오 4단계 (2시간) · SHealth BMI (Java)_
 ## 복사용 (한 블록)
 
 ```
+첨부:
+@작업프롬프트/4단계_PCTF.md
+@작업시나리오
+@SHealthRequirements.txt
+@.cursorrules
+@SHealth.java
+@src/test/java/com/bestreviewer/
+@docs/03-2.S_Health_결함_레지스터.md
+@docs/03-2.S_Health_권장사항_레지스터.md
+@Report/03-2.S_Health_결함및권장사항_통합보고서.md
+@docs/03.S_Health_단위테스트계획서.md
+@Report/03.S_Health_단위테스트_보고서.md
+
 [P] SRP·TDD 시니어 Java. 기존 calculateBmi/getBmiRatio 호환·테스트로 회귀 입증.
 
 [C] 2~3단계 Green. SHealthRequirements.txt + .cursorrules 4단계 확장.
+참조 문서:
+- 작업프롬프트/4단계_PCTF.md — 본 단계 PCTF
+- 작업시나리오 — 4단계 기능 목록(SRP·연령대 비율·키0·정상목록·전체비율)
+- SHealthRequirements.txt — FR-01~06, TS-01~06, 분류·보정 규칙
+- .cursorrules — 4단계 확장 항목·TDD·Given–When–Then
+- SHealth.java — calculateBmi, getBmiRatio, 리팩토링 대상
+- src/test/java/com/bestreviewer/*Test.java — 3단계 Green TC(회귀 기준)
+- docs/03-2.S_Health_결함_레지스터.md — DEF-xx(4단계 이관·P0)
+- docs/03-2.S_Health_권장사항_레지스터.md — REC-xx(4단계 Feature)
+- Report/03-2.S_Health_결함및권장사항_통합보고서.md — 4단계 진입 체크리스트
+- docs/03.S_Health_단위테스트계획서.md — TC-ID·경계·픽스처
+- Report/03.S_Health_단위테스트_보고서.md — D-xx·§6 4단계 보강 TC
 
 [T]
 1) SRP 분리: Reader, UserRecord, Imputation, BmiCalculator, Classifier, Statistics, SHealth 파사드
@@ -136,5 +171,10 @@ _작업시나리오 4단계 (2시간) · SHealth BMI (Java)_
 5) 전체 사용자 4분류 비율(%)
 기능마다 JUnit5 TC. mvn clean test Green.
 
-[F] main/test 소스 + (선택) Report/04.S_Health_기능개선_보고서.md.
+[F] 산출물 (필수):
+  1) src/main/java/com/bestreviewer/ — SRP 분리 클래스·SHealth 파사드
+  2) src/test/java/com/bestreviewer/ — 4-2~4-5 신규 TC, 기존 *Test Green
+  3) Report/04.S_Health_기능개선_보고서.md (필수, 구현·테스트 후)
+     §1 패키지·클래스(mermaid) · §2 신규·변경 API · §3 처리 순서 · §4 기능↔TC 매핑 · §5 API 호환·DEF/REC 해소 · §6 mvn clean test
+mvn clean test 전체 Green. 한국어.
 ```

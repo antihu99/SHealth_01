@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** TS-06 파일·형식 예외. */
 class SHealthExceptionTest {
 
   @Test
-  @DisplayName("존재하지 않는 파일이면 userCount 0이다 (비율은 빈 집계로 NaN)")
+  @DisplayName("존재하지 않는 파일이면 userCount 0이다 (비율은 0%)")
   void calculateBmi_missingFile_returnsZeroUsers() {
     SHealth shealth = new SHealth();
     int count = shealth.calculateBmi("no_such_file_3stage.dat");
     assertEquals(0, count);
-    assertTrue(Double.isNaN(shealth.getBmiRatio(20, SHealth.TYPE_NORMAL)));
+    assertEquals(0.0, shealth.getBmiRatio(20, SHealth.TYPE_NORMAL));
   }
 
   @Test

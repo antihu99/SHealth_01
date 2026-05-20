@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** TS-05 나이대별 비율·getBmiRatio 통합. */
 class SHealthAgeGroupRatioTest {
@@ -24,11 +23,11 @@ class SHealthAgeGroupRatioTest {
   }
 
   @Test
-  @DisplayName("빈 나이대(30대 무인원) 조회 시 0으로 나누기로 NaN이 반환된다 (현재 구현)")
-  void getBmiRatio_emptyAgeGroup_returnsNaN() {
+  @DisplayName("빈 나이대(30대 무인원) 조회 시 0%가 반환된다")
+  void getBmiRatio_emptyAgeGroup_returnsZero() {
     SHealth shealth = new SHealth();
     shealth.calculateBmi(TestFixtures.path("single_normal_20s.csv"));
 
-    assertTrue(Double.isNaN(shealth.getBmiRatio(30, SHealth.TYPE_NORMAL)));
+    assertEquals(0.0, shealth.getBmiRatio(30, SHealth.TYPE_NORMAL), DELTA);
   }
 }
