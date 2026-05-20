@@ -1,6 +1,6 @@
 # SHealth_01 — 사용자 입력 프롬프트 모음
 
-_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · TC 브랜치_  
+_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · 3-2 결함·권장 통합 · TC 브랜치_  
 _수집일: 2026-05-19 (갱신: 2026-05-20)_
 
 ---
@@ -266,6 +266,63 @@ github tc 브랜치에 지금까지 작업한 파일을 업로드 해줘 comment
 prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
 ```
 
+_(03단계 세션 — `prompting/03.S_Health_단위테스트_prompt.md` 생성)_
+
+---
+
+## Prompt 25
+
+```
+지금까지 발견된 결함이나, 권장 사항에 대한 보고서를 정리할 promtp를 pctf 방식으로 만들어서. 3-2단계 로 해서 파일 작업프롬프트 폴더에 만들어줘
+```
+
+---
+
+## Prompt 26
+
+```
+@작업프롬프트/3-2단계_PCTF.md  의 [f] 산출물에 결함이나, 권장 사항에 대해 문서화해서 docs 폴더에 저장하도록 보완해줘
+```
+
+---
+
+## Prompt 27
+
+**첨부:** `@작업프롬프트/3-2단계_PCTF.md` `@작업시나리오` `@SHealthRequirements.txt` `@.cursorrules`  
+`@docs/01.S_Health_코드스멜_분석보고서.md` `@Report/01.S_Health_code_smell_보고서.md`  
+`@docs/02.S_Health_1차리팩토링_체크리스트.md` `@Report/02.S_Health_1차리팩토링_보고서.md`  
+`@docs/03.S_Health_단위테스트계획서.md` `@Report/03.S_Health_단위테스트_보고서.md`  
+`@src/test/java/com/bestreviewer/` `@SHealth.java`
+
+**3-2 PCTF 복사용 블록** — DEF/REC 통합, docs 2 + Report 1, 코드·TC 수정 금지
+
+```
+[P] 1~3단계 산출물만 근거로 결함·권장사항 통합·중복 제거. SHealthRequirements.txt 단일 기준. 코드·TC 수정 금지.
+[C] DEF-xx, REC-xx, 상태 Open/Test-Locked/Deferred-4 등.
+[T] 1) 교차표 2) docs/03-2.S_Health_결함_레지스터.md 3) docs/03-2.S_Health_권장사항_레지스터.md 4) Report/03-2.* 요약
+[F] docs 2종 + Report 1종 필수. ID·건수 일치.
+```
+
+_(전문은 `작업프롬프트/3-2단계_PCTF.md` 복사용 및 `prompting/03-2.S_Health_결함및권장사항_prompt.md` Turn 3 참조)_
+
+---
+
+## Prompt 28
+
+```
+github tc 브랜치에 지금까지 작업한 파일을 업로드 해줘 comment 는 " 3-2단계 단위 테스트 결함 목록 문서화" 이라고 해줘
+```
+
+---
+
+## Prompt 29
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+_(03-2단계 세션 — `prompting/03-2.S_Health_결함및권장사항_prompt.md` 생성)_
+
 ---
 
 ## 프롬프트 흐름 요약
@@ -293,4 +350,9 @@ prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저�
 | 21 | 3단계 `docs/03` 단위테스트계획서 산출물 | 3단계_PCTF.md |
 | 22 | 3단계 PCTF 실행 (계획·TC·보고서) | TS-01~06, *Test |
 | 23 | `TC` 브랜치 커밋·푸시 | GitHub |
-| 24 | 03단계 prompting 문서화 | prompting/ |
+| 24 | 03단계 prompting 문서화 | `03.S_Health_단위테스트_prompt.md` |
+| 25 | 3-2단계 PCTF 프롬프트 작성 | `작업프롬프트/3-2단계_PCTF.md` |
+| 26 | 3-2 [F] docs 레지스터 산출물 보완 | `3-2단계_PCTF.md` |
+| 27 | 3-2 PCTF 실행 (DEF/REC·docs·Report) | 1~3단계 보고서·`*Test` |
+| 28 | `TC` 브랜치 커밋·푸시 (`7101869`) | GitHub |
+| 29 | 03-2 prompting 문서화 | `03-2.S_Health_결함및권장사항_prompt.md` |
