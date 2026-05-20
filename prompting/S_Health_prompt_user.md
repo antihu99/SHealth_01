@@ -1,7 +1,7 @@
 # SHealth_01 — 사용자 입력 프롬프트 모음
 
-_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1단계 코드 스멜 · 2단계 1차 리팩토링_  
-_수집일: 2026-05-19_
+_작업 주제: 원격 저장소 연결 · 요구사항 정의서 · .cursorrules · 1~2단계 · 3단계 단위테스트 · TC 브랜치_  
+_수집일: 2026-05-19 (갱신: 2026-05-20)_
 
 ---
 
@@ -208,6 +208,66 @@ prompting 폴더에 agent 와 대화한 전체를 파일로 저장해줘.
 
 ---
 
+## Prompt 18
+
+```
+GITHUB 에 TC 브랜치를 만들어줘, 그리고 COMMENT 는 "테스트 계획 (Test Plan)
+테스트 케이스 작성 (Test Cases)
+테스트 실행 & 결함 분석 (Defect Detection)" 라고 입력해줘
+```
+
+---
+
+## Prompt 19
+
+```
+@작업프롬프트/3단계_PCTF.md  문서에서 [F] 단계 산출문 테스트 소스의 CLASS 명은 마지막에"Test" 라고 붙여서 생성해 주고, 보고서는 선택이 아닌 필수도 바꿔서 저자해줘
+```
+
+---
+
+## Prompt 20
+
+```
+@작업프롬프트/3단계_PCTF.md 복사용 한 블룩에 참조할 문서도 전부 표기해줘
+```
+
+---
+
+## Prompt 21
+
+```
+@작업프롬프트/3단계_PCTF.md  산출물에 단위 test 계획에 관한 문서도 docs 폴더에 03.S_Health_단위테스트계획서.md 로 남길 수 있게 보완해줘
+```
+
+---
+
+## Prompt 22
+
+**첨부:** `@작업프롬프트/3단계_PCTF.md` `@작업시나리오` `@README.md` `@.cursorrules` `@SHealthRequirements.txt` `@pom.xml` `@SHealth.java` `@SHealthBMI.java` `@src/test/java/com/bestreviewer/SHealthBMITest.java` `@Report/02.S_Health_1차리팩토링_보고서.md` `@docs/02.S_Health_1차리팩토링_체크리스트.md` `@docs/01.S_Health_코드스멜_분석보고서.md` (또는 `@Report/01.S_Health_code_smell_보고서.md`)
+
+**3단계 PCTF 복사용 블록 전체** — 계획서 → TC 구현 → 보고서, TS-01~06, `*Test` 5클래스, `docs/03.*`·`Report/03.*` 필수
+
+_(전문은 `작업프롬프트/3단계_PCTF.md` 복사용 섹션 및 `prompting/03.S_Health_단위테스트_prompt.md` Turn 5 참조)_
+
+---
+
+## Prompt 23
+
+```
+github tc 브랜치에 지금까지 작업한 파일을 업로드 해줘 comment 는 " 3단계 단위 테스트 계획 및 테스트 케이스 작성" 이라고 해줘
+```
+
+---
+
+## Prompt 24
+
+```
+prompting 폴더에 agent 와 대화한 전체내용을 새로운 파일에 저장하고 내가 입력한 prompt 는 "S_Health_prompt_user" 파일에 덧붙여줘
+```
+
+---
+
 ## 프롬프트 흐름 요약
 
 | # | 의도 | 참조 |
@@ -227,3 +287,10 @@ prompting 폴더에 agent 와 대화한 전체를 파일로 저장해줘.
 | 15 | 2단계 [F] docs 산출물·PCTF 실행 지시 | 1단계 스멜 보고서 |
 | 16 | 2단계 리팩토링·Report/02 실행 | SHealth.java |
 | 17 | 02단계 prompting 문서화 | prompting/ |
+| 18 | GitHub `TC` 브랜치 생성·푸시 | origin/TC |
+| 19 | 3단계 PCTF — `*Test` 명명·보고서 필수 | 3단계_PCTF.md |
+| 20 | 3단계 복사용 블록 참조 문서 전체 | 3단계_PCTF.md |
+| 21 | 3단계 `docs/03` 단위테스트계획서 산출물 | 3단계_PCTF.md |
+| 22 | 3단계 PCTF 실행 (계획·TC·보고서) | TS-01~06, *Test |
+| 23 | `TC` 브랜치 커밋·푸시 | GitHub |
+| 24 | 03단계 prompting 문서화 | prompting/ |

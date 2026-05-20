@@ -55,6 +55,7 @@ Given–When–Then 구조와 @ParameterizedTest를 활용합니다.
 1) docs/03.S_Health_단위테스트계획서.md — 테스트 계획·TC 목록·경계값·픽스처 설계 (구현 전 작성)
 2) src/test/.../*Test.java — 계획서에 따른 TC 구현 (Red → Green)
 3) Report/03.S_Health_단위테스트_보고서.md — 실행 결과·결함 분석 (구현·실행 후 작성)
+4) (선택·권장) 3-2단계 — [`3-2단계_PCTF.md`](./3-2단계_PCTF.md) 로 1~3단계 결함·권장사항 통합 보고서 작성
 필요 시 프로덕션 최소 수정(테스트 가능성)만 허용합니다.
 
 ### 3-1. BMI 계산 로직 TC (TS-01)
